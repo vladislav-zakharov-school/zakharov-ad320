@@ -1,11 +1,11 @@
 import React from 'react';
 import './Button.css';
 
-function Button() {
+function Button(props) {
     return (
         // <button onClick={activateLasers}>
         <button className='button'>
-            Button
+            {props.text}
         </button>
     );
 }

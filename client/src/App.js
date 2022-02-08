@@ -4,6 +4,7 @@ import Topbar from "./components/Topbar/Topbar";
 import Card from "./components/Card/Card"
 import Button from "./components/Button/Button"
 
+const cardLinks = ['Card A', 'Card B', 'Card C', 'Card D', 'Card E', 'Card F', 'Card G']
 
 function App() {
   return (
@@ -11,14 +12,18 @@ function App() {
       <Topbar />
       <div className="page">
         <div className="sidebar">
-          <p>hello there</p>
+          <ul>
+            {cardLinks.map((link) => {
+              return (<li>{link}</li>);
+            })}
+          </ul>
         </div>
         <div className="content">
           <Card />
           <div className="navigation">
-            <Button />
-            <Button />
-            <Button />
+            <Button text="Back"/>
+            <Button text="Flip"/>
+            <Button text="Next"/>
           </div>
         </div>
         <div className="sidebar">
