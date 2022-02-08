@@ -1,0 +1,7 @@
+.topbar {
+    position: relative;
+    z-index: 2;
+    height: 2rem;
+    background: turquoise;
+    padding: 1rem;
+}

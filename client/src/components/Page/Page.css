@@ -1,0 +1,15 @@
+.page {
+    /* location */
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 4rem;
+
+    /* organization */
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+
+    /* style */
+    background: orange;
+    padding: 1rem;
+}

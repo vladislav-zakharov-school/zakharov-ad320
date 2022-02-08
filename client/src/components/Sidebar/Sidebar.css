@@ -1,0 +1,11 @@
+.sidebar {
+    /* position */
+    position: relative;
+    z-index: 1;
+
+    /* style */
+    border-radius: 1rem;
+    padding: 1rem;
+    margin: 1rem;
+    background: turquoise;
+}
