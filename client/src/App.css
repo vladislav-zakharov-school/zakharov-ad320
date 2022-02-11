@@ -2,32 +2,3 @@
     margin: 0;
     padding: 0;
 }
-
-.page {
-    /* location */
-    position: absolute;
-    z-index: 0;
-    left: 0;
-    top: 4rem;
-    width: 100vw;
-
-    /* organization */
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-
-    /* style */
-    background: orange;
-}
-
-.sidebar {
-    /* style */
-    background: turquoise;
-    margin: 1rem;
-    padding: 2rem;
-}
-
-.content {
-    /* style */
-    margin: 1rem;
-    text-align: center;
-}
