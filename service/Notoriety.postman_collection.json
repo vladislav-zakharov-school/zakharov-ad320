@@ -1,0 +1,169 @@
+{
+	"info": {
+		"_postman_id": "ee596b33-699c-43d4-9e8d-b191a9e48574",
+		"name": "Notoriety",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get an individual card by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/decks/620c4c04194ff5f2affced6d/cards/620c4c04194ff5f2affced90",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"620c4c04194ff5f2affced6d",
+						"cards",
+						"620c4c04194ff5f2affced90"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a deck by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/decks/620c4c04194ff5f2affced6d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"620c4c04194ff5f2affced6d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a deck by user",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Create a deck",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"testName\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/users/620c7cae493a3232f87cedb1/deck",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"620c7cae493a3232f87cedb1",
+						"deck"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"frontImage\":\"http://dummyimage.com/200x200.png/5fa2dd/ffffff\",\n    \"frontText\": \"front text\",\n    \"backImage\": \"http://dummyimage.com/200x200.png/ff4444/ffffff\",\n    \"backText\": \"back text\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/decks/620dc9c7cbbc4aba614bd433/cards",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"620dc9c7cbbc4aba614bd433",
+						"cards"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit card",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"frontImage\": \"http://dummyimage.com/200x200.png/5fa2dd/ffffff\",\n    \"frontText\": \" edit front text\",\n    \"backImage\": \"http://dummyimage.com/200x200.png/ff4444/ffffff\",\n    \"backText\": \"back text\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/decks/620dc9c7cbbc4aba614bd433/cards/620dce7c2ddfc667dca8924a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"620dc9c7cbbc4aba614bd433",
+						"cards",
+						"620dce7c2ddfc667dca8924a"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

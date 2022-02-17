@@ -1,0 +1,13 @@
+////    Get an individual card by id
+??    Get all cards for a deck, with the option to paginate results
+////    Get a deck by id
+////    Get a deck by user
+//    Create a deck
+//    Create card
+//    Create a user
+//    Update a card
+    Update a deck
+    Update a user
+//    Delete a card
+//    Delete a deck and all associated cards
+//    Delete a user
