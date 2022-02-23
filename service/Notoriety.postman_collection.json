@@ -70,7 +70,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8000/users/620c7cae493a3232f87cedb1/deck",
+					"raw": "http://localhost:8000/users/620c7cae493a3232f87cedb1/decks",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -79,7 +79,7 @@
 					"path": [
 						"users",
 						"620c7cae493a3232f87cedb1",
-						"deck"
+						"decks"
 					]
 				}
 			},
@@ -90,6 +90,15 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"userName\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8000/users",
 					"protocol": "http",
@@ -160,6 +169,68 @@
 						"620dc9c7cbbc4aba614bd433",
 						"cards",
 						"620dce7c2ddfc667dca8924a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a card",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/decks/620dc9c7cbbc4aba614bd433/cards/6216418d9dc70f916fb6b40d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"620dc9c7cbbc4aba614bd433",
+						"cards",
+						"6216418d9dc70f916fb6b40d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a deck",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/decks/621654969f72b0bb3ca665ed",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"decks",
+						"621654969f72b0bb3ca665ed"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a user",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/users/621642149dc70f916fb6b416",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"621642149dc70f916fb6b416"
 					]
 				}
 			},

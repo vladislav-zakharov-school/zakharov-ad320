@@ -51,12 +51,12 @@ async function deckExists(id) {
   }
 }
 function cardExists(deck, card_id) {
-  let card;
   try {
-    card = deck.cards.id(card_id);
+    const card = deck.cards.id(card_id);
     return card;
   } catch (err) {
     console.log("error ", err);
+    return card;
   }
 }
 
@@ -251,13 +251,15 @@ app.put("/decks/:deck_id/cards/:card_id", async (req, res) => {
   if (deck) {
     let card = cardExists(deck, req.params.card_id);
     if (card) {
-      card.body = {
-        frontImage: cardRequest.frontImage,
-        frontText: cardRequest.frontText,
-        backImage: cardRequest.backImage,
-        backText: cardRequest.backText,
-      };
-      await deck.save();
+      card.frontImage = cardRequest.frontImage;
+      card.frontText = cardRequest.frontText;
+      card.backImage = cardRequest.backImage;
+      card.backText = cardRequest.backText;
+      await deck.save((err) => {
+        if (err) {
+          res.status(400).send("Failed to save the deck!");
+        }
+      });
     } else {
       res.status(400).send("No such card!");
     }
@@ -269,10 +271,18 @@ app.put("/decks/:deck_id/cards/:card_id", async (req, res) => {
 
 // Delete a card
 app.delete("/decks/:deck_id/cards/:card_id", async (req, res) => {
-  let deck = deckExists(req.params.deck_id);
+  let deck = await deckExists(req.params.deck_id);
   if (deck) {
-    let card = cardExists(req.params.card_id);
-    deck.cards.removeOne(card);
+    let card = cardExists(deck, req.params.card_id);
+    if (card) {
+      deck.cards.id(card._id).remove();
+      deck.size = deck.size - 1;
+      await deck.save((err) => {
+        if (err) {
+          res.status(400).send("Failed to save the deck!");
+        }
+      });
+    }
   } else {
     res.status(404).send("No such deck!");
   }
@@ -281,13 +291,35 @@ app.delete("/decks/:deck_id/cards/:card_id", async (req, res) => {
 
 // Delete a deck and all associated cards
 app.delete("/decks/:id", async (req, res) => {
-  let deck = deckExists(req.params.id);
-  await deck.cards.deleteMany({});
+  let deck = await deckExists(req.params.id);
 
   if (deck) {
-    Deck.deleteOne(deck);
+    let user = await userExists(deck.userId);
+    if (user) {
+      user.deckId = null;
+    } else {
+      res.status(400).send("No user associated with that deck!");
+    }
+    await user.save((err) => {
+      if (err) {
+        res.status(400).send("Failed to save user!");
+      }
+    });
+    deck.cards = [];
+    deck.size = 0;
+    await deck.save((err) => {
+      if (err) {
+        res.status(400).send("Failed to delete all cards!");
+        console.log(err);
+      }
+    });
+    Deck.deleteOne(deck, (err) => {
+      if (err) {
+        res.status(400).send("Failed while deleting deck!");
+      }
+    });
   } else {
-    res.status(404).send("No such deck!");
+    res.status(400).send("No such deck!");
   }
   res.sendStatus(200);
 });
@@ -296,10 +328,23 @@ app.delete("/decks/:id", async (req, res) => {
 app.delete("/users/:id", async (req, res) => {
   let user = await userExists(req.params.id);
   if (user) {
-    User.deleteOne(user);
+    let deck = await deckExists(user.deckId);
+    if (deck) {
+      Deck.deleteOne(deck, (err) => {
+        if (err) {
+          res.status(400).send("Failed while deleting deck!");
+        }
+      });
+    }
+    User.deleteOne(user, (err) => {
+      if (err) {
+        res.status(400).send("Failed while deleting user!");
+      }
+    });
   } else {
     res.status(400).send("No such user!");
   }
+  res.sendStatus(400);
 });
 
 // END
