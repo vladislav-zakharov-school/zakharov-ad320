@@ -6,7 +6,7 @@ import Deck from "./Deck"
 
 import CreateFlashcard from "../Flashcard/CreateFlashcard"
 
-const DeckProvider = ({ decks, createMode }) => {
+const DeckProvider = ({userId, decks, createMode }) => {
   const [index, setIndex] = useState(0)
 
   return (
@@ -36,7 +36,7 @@ const DeckProvider = ({ decks, createMode }) => {
       </Paper>
       <div>
         {createMode ? (
-          <CreateFlashcard deckId={decks[index]._id} />
+          <CreateFlashcard userId={userId} deckId={decks[index]._id} />
         ) : (
           <Deck deck={decks[index]} />
         )}

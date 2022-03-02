@@ -21,7 +21,7 @@ function App() {
       <Topbar createCardHandler={() => { setCreateMode(!createMode) }} />
       <Container width="lg">
         {user === null ? <span>Loading...</span> :
-          <DeckProvider decks={user.decks} createMode={createMode} /> }
+          <DeckProvider userId={user._id} decks={user.decks} createMode={createMode} /> }
       </Container>
     </React.Fragment>
   )
