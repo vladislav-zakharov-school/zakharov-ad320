@@ -1,12 +1,18 @@
 import React, { useState } from "react"
 
-import { Paper, List, ListItemButton, ListItemText, Stack } from "@mui/material"
+import {
+  Paper,
+  List,
+  ListItemButton,
+  ListItemText,
+  ListSubheader,
+  Stack,
+} from "@mui/material"
 
-import Deck from "./Deck"
+import Deck from '../Deck/Deck'
+import CreateFlashcard from '../Flashcard/CreateFlashcard'
 
-import CreateFlashcard from "../Flashcard/CreateFlashcard"
-
-const DeckProvider = ({userId, decks, createMode }) => {
+const DeckProvider = ({ userId, decks, createMode }) => {
   const [index, setIndex] = useState(0)
 
   return (
@@ -18,7 +24,10 @@ const DeckProvider = ({userId, decks, createMode }) => {
       sx={{ mt: 3 }}
     >
       <Paper elevation={3}>
-        <List sx={{ width: "15vw" }}>
+        <List
+          sx={{ width: "15vw" }}
+          subheader={<ListSubheader>Decks</ListSubheader>}
+        >
           {decks.map((deck, idx) => {
             return (
               <ListItemButton
@@ -34,13 +43,7 @@ const DeckProvider = ({userId, decks, createMode }) => {
           })}
         </List>
       </Paper>
-      <div>
-        {createMode ? (
-          <CreateFlashcard userId={userId} deckId={decks[index]._id} />
-        ) : (
-          <Deck deck={decks[index]} />
-        )}
-      </div>
+      <div>{createMode ? <CreateFlashcard userId={userId} deckId={decks[index]._id}/> : <Deck deck={decks[index]} />}</div>
     </Stack>
   )
 }

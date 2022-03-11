@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Box,
   Button,
@@ -9,31 +9,7 @@ import {
   Typography
 } from '@mui/material'
 
-function Flashcard({ card, previous, next }) {
-  const [isFront, setIsFront] = useState(true)
-  const [content, setContent] = useState({
-    image: card.frontImage,
-    text: card.frontText
-  })
-
-  useEffect(() => {
-    if (isFront) {
-      setContent({
-        image: card.frontImage,
-        text: card.frontText
-      })
-    } else {
-      setContent({
-        image: card.backImage,
-        text: card.backText
-      })
-    }
-  }, [isFront, card])
-
-  const flip = () => {
-    setIsFront(!isFront)
-  }
-
+function Flashcard({ content, previous, next, flip }) {
   return (
     <Box sx={{ width: '100%', mt: 8, display: 'flex', justifyContent: 'space-around'}}>
       <Card sx={{ width: '40vw' }} elevation={3}>
@@ -42,7 +18,7 @@ function Flashcard({ card, previous, next }) {
           height="200"
           image={content.image} />}
         <CardContent>
-          <Typography>{content.text}</Typography>
+          <Typography>{content.text ?? ''}</Typography>
         </CardContent>
         <CardActions sx={{ display: 'flex', justifyContent: 'center' }}>
         <Button
@@ -67,7 +43,5 @@ function Flashcard({ card, previous, next }) {
     </Box>
   )
 }
-
-// TODO - disable previous and next based on index
 
 export default Flashcard
