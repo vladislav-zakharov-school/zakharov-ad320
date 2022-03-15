@@ -25,6 +25,4 @@ function Topbar({ createCardHandler }) {
   )
 }
 
-// TODO button in top bar to 'view decks'
-
 export default Topbar

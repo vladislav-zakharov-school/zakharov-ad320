@@ -14,7 +14,7 @@ const sleepAndQuit = new Promise((resolve) => {
 })
 
 const initDB = async () => {
-  const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.bf91m.mongodb.net/notoriety?retryWrites=true&w=majority`
+  const connectionString = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.bf91m.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
   try {
     await mongoose.connect(connectionString)
   } catch (err) {
@@ -27,7 +27,8 @@ const initDB = async () => {
       lastName: user.lastName,
       decks: user.decks,
       email: user.email,
-      password: v4()
+      password: v4(),
+      active: true
     })
   }
 

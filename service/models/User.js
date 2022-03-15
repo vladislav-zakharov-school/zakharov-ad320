@@ -31,7 +31,9 @@ const UserSchema = new mongoose.Schema({
     validate: [validateEmail, 'Please provide a valid email address'],
   },
   password: { type: String, required: true },
-  decks: [DeckSchema]
+  decks: [DeckSchema],
+  active: { type: Boolean, default: true },
+  role: { type: ['admin', 'superuser', 'user'], default: 'user' }
 })
 
 export const User = mongoose.model('User', UserSchema)
