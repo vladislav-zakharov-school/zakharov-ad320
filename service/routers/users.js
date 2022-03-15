@@ -54,7 +54,7 @@ const deleteUser = async (req, res) => {
   const { userId } = req.user
   const requestor = await User.findById(userId)
   if (requestor.role === 'admin' || requestor.role === 'superuser') {
-    if (requestor.role === superuser && requestor._id != req.params.id) {
+    if (requestor.role === 'superuser' && requestor._id != req.params.id) {
       res.status(403).send('Forbidden')
     } else {
       const result = await User.findByIdAndUpdate(req.params.id, { active: false })

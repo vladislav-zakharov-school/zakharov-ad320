@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { validationResult } from 'express-validator'
+import { body, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import { User } from '../models/User.js'
@@ -70,7 +70,7 @@ async function login(req, res) {
 }
 
 authRouter.post('/login', login)
-authRouter.post('/register', body("email").isEmail(), body("password").notEmtpy(), register)
+authRouter.post('/register', body("email").isEmail(), body("password").notEmpty(), register)
 
 export default authRouter
 
