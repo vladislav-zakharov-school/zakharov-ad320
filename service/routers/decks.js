@@ -1,27 +1,12 @@
-// import { validationResult } from 'express-validator'
+import { Router } from 'express'
+import { body } from 'express-validator'
 import { User } from '../models/User.js'
+import { validator } from '../middlewares/validation.js'
 
-export const deckById = async (req, res) => {
-  // We're assuming we get a user id from the headers until we cover auth
-  const userId = req.headers.user
-  console.log(`user: ${userId} deckId ${req.params.id}`)
-  try {
-    const user = await User.findById(userId)
-    const deck = user.decks.id(req.params.id)
-    if (deck) {
-      res.send(deck)
-    } else {
-      res.sendStatus(404)
-    }
-  } catch (err) {
-    console.log(`${deckById.name}: ${err}`)
-    res.sendStatus(500)
-  }
-}
+const decksRouter = Router()
 
-export const getDecks = async (req, res) => {
-  // We're assuming we get a user id from the headers until we cover auth
-  const userId = req.headers.user
+const getDecks = async (req, res) => {
+  const { userId } = req.user
   try {
     const user = await User.findById(userId)
     if (user) {
@@ -35,9 +20,8 @@ export const getDecks = async (req, res) => {
   }
 }
 
-export const createDeck = async (req, res) => {
-  // ... you get it
-  const userId = req.headers.user
+const createDeck = async (req, res) => {
+  const userId = ''
   const newDeck = req.body
   try {
     const user = await User.findById(userId)
@@ -53,8 +37,8 @@ export const createDeck = async (req, res) => {
   }
 }
 
-export const createCard = async (req, res) => {
-  const userId = req.headers.user
+const createCard = async (req, res) => {
+  const userId = ''
   const deckId = req.params.id
   const newCard = req.body
   try {
@@ -70,8 +54,8 @@ export const createCard = async (req, res) => {
   }
 }
 
-export const deleteDeck = async (req, res) => {
-  const userId = req.headers.user
+const deleteDeck = async (req, res) => {
+  const userId = ''
   const deckId = req.params.id
   try {
     const user = await User.findById(userId)
@@ -85,8 +69,8 @@ export const deleteDeck = async (req, res) => {
   }
 }
 
-export const updateDeck = async (req, res) => {
-  const userId = req.headers.user
+const updateDeck = async (req, res) => {
+  const userId = ''
   const deckId = req.params.id
   const newDeck = req.body
   try {
@@ -100,3 +84,25 @@ export const updateDeck = async (req, res) => {
     res.sendStatus(500)
   }
 }
+
+decksRouter.get('/', getDecks)
+decksRouter.post('/', body('name').not().isEmpty(), validator, createDeck)
+decksRouter.put(
+  '/:id',
+  body('name').not().isEmpty(),
+  validator,
+  updateDeck
+)
+decksRouter.delete('/:id', deleteDeck)
+
+decksRouter.post(
+  '/:id/cards',
+  body('frontImage').isURL(),
+  body('frontText').not().isEmpty(),
+  body('backImage').isURL(),
+  body('backText').not().isEmpty(),
+  validator,
+  createCard
+)
+
+export default decksRouter
