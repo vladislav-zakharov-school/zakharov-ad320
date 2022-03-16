@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react"
-import { Button, Stack, TextField, Container, MenuItem } from "@mui/material"
+import { Container, MenuItem } from "@mui/material"
 import axios from "axios"
 import { useAuth } from "../Auth/AuthProvider"
 
 const User = ({ userId, userN }) => {
   const { auth } = useAuth()
-  const [decks, setDecks] = useState(null)
+  const [decks, setDecks] = useState()
 
   useEffect(() => {
     if (auth) {
@@ -25,30 +25,22 @@ const User = ({ userId, userN }) => {
     }
   }, [auth])
 
-  
-
   if (!decks) {
     return <span>Loading...</span>
   }
 
+  console.log(auth.user)
+
   return (
     <Container maxWidth="md">
-      <Stack component="form" sx={{ mt: 1 }}>
-        <TextField
-          id="deck"
-          name="deck"
-          select
-          label="Deck"
-          helperText="Please select your currency"
-          autoFocus
-        >
-          {decks.map((deck) => (
-            <MenuItem key={deck.id} value={deck.id}>
-              {deck.name}
-            </MenuItem>
-          ))}
-        </TextField>
-      </Stack>
+        <div>
+            {auth.user}
+        </div>
+        {decks.map((deck) => (
+          <MenuItem key={deck.id} value={deck.id}>
+            {deck.name}
+          </MenuItem>
+        ))}
     </Container>
   )
 }

@@ -22,7 +22,7 @@ const Register = () => {
       email: data.get("email"),
       password: data.get("password"),
     })
-    register(data.get("email"), data.get("password"), (err) => {
+    register(data.get("firstName"), data.get("lastName"), data.get("email"), data.get("password"), (err) => {
       if (err) {
         setErr(err)
       } else {
@@ -44,6 +44,24 @@ const Register = () => {
         Register
       </Typography>
       <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="firstName"
+          label="First Name"
+          name="firstName"
+          autoFocus
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="lastName"
+          label="Last Name"
+          name="lastName"
+          autoFocus
+        />
         <TextField
           margin="normal"
           required
@@ -70,7 +88,7 @@ const Register = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Sign In
+          Resgister
         </Button>
       </Box>
       {err === null ? (

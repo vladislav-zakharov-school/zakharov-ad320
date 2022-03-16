@@ -22,7 +22,6 @@ ReactDOM.render(
         <Routes>
           <Route path="/" element={<Welcome />} />
           <Route path="/user" element={<Protected><User /></Protected>} />
-          {/* Addignment: Add a route for /user to redirect to from Login */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/app" element={<Protected><App /></Protected>} />

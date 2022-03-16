@@ -21,8 +21,8 @@ const getDecks = async (req, res) => {
 }
 
 const createDeck = async (req, res) => {
-  const userId = ''
-  const newDeck = req.body
+  const userId = req.body.userId
+  const newDeck = req.body.deck
   try {
     const user = await User.findById(userId)
     user.decks.push({

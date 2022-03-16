@@ -19,7 +19,14 @@ const register = async (req, res) => {
       // here with these tools
       newUser.password = await bcrypt.hash(req.body.password, 10)
       const savedUser = await User.create(newUser)
-      res.status(200).send(savedUser._id)
+      const payload = {
+        user: savedUser._id
+      }
+      const token = await jwt.sign(payload. process.env.JWT_SECRET, { expiresIn: 86400 })
+      res.status(200).send({
+        expiresIn: 86400,
+        token: token
+      })
     }
   } catch (err) {
     console.log(`User creation failed: ${err}`)
