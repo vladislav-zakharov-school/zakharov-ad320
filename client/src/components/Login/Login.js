@@ -1,17 +1,25 @@
-import React from 'react'
-import { Button, Box, TextField, Typography } from '@mui/material'
-import { useAuth } from '../Auth/AuthProvider'
-import { Navigate, useNavigate, useLocation } from 'react-router-dom'
+import React, { useState } from "react"
+import {
+  Button,
+  Box,
+  TextField,
+  Typography,
+  Alert,
+  AlertTitle,
+} from "@mui/material"
+import { useAuth } from "../Auth/AuthProvider"
+import { Navigate, useNavigate, useLocation } from "react-router-dom"
 
 const Login = () => {
   const { auth, login } = useAuth()
   const navigate = useNavigate()
   let location = useLocation()
+  let [err, setErr] = useState(null)
 
   // Assignment: redirect the newly logged in user to the page they were on
   // OR to the User component
 
-  const source = location.state?.from?.pathname || "/app"
+  const source = location.state?.from?.pathname || "/user"
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -19,8 +27,12 @@ const Login = () => {
     // care about validation or more complex persistence, we can rely on
     // the event data itself and an object in React called FormData
     const data = new FormData(event.currentTarget)
-    login(data.get('email'), data.get('password'), () => {
-      navigate(source, { replace: true })
+    login(data.get("email"), data.get("password"), (err) => {
+      if (err) {
+        setErr(err)
+      } else {
+        navigate(source, { replace: true })
+      }
     })
   }
 
@@ -32,9 +44,9 @@ const Login = () => {
     <Box
       sx={{
         marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       <Typography component="h1" variant="h5">
@@ -70,6 +82,13 @@ const Login = () => {
           Sign In
         </Button>
       </Box>
+      {err === null ? (
+        err = null
+      ) : (
+        <Alert severity="error">
+          <AlertTitle>Incorrect Login Info</AlertTitle>
+        </Alert>
+      )}
     </Box>
   )
 }
