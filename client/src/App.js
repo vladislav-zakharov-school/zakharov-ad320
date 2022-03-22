@@ -1,30 +1,43 @@
-import React, { useEffect, useState } from 'react'
-import { Container } from '@mui/material'
-import './App.css'
-import Topbar from './components/Topbar/Topbar'
-import DeckProvider from './components/Deck/DeckProvider'
-import axios from 'axios'
+import React, { useEffect, useState } from "react"
+import Container from "@mui/material/Container"
+import "./App.css"
+import DeckProvider from "./components/Deck/DeckProvider"
+import axios from "axios"
+import { useAuth } from "./components/Auth/AuthProvider"
 
 function App() {
-  const [createMode, setCreateMode] = useState(false)
   const [user, setUser] = useState(null)
 
+  const { auth } = useAuth()
+
   useEffect(() => {
-    axios.get('http://localhost:8000/users').then((response) => {
-      console.log(`response from users ${response.data[0].firstName}`)
-      setUser(response.data[0])
-    })
-  }, [])
+    if (auth) {
+      console.log(`[App] useEffect ${auth.token}`)
+      axios
+        .get(`http://localhost:8000/users/${auth.user}`, {
+          headers: { authorization: `Bearer ${auth.token}` },
+        })
+        .then((response) => {
+          console.log(
+            `response from users ${response.data.firstName} `,
+            response.data
+          )
+          setUser(response.data)
+        })
+    }
+  }, [auth])
 
   return (
     <React.Fragment>
-      <Topbar createCardHandler={() => { setCreateMode(!createMode) }} />
       <Container width="lg">
-        {user === null ? <span>Loading...</span> :
-          <DeckProvider userId={user._id} decks={user.decks} createMode={createMode} /> }
+        {user === null ? (
+          <span>Loading...</span>
+        ) : (
+          <DeckProvider userId={user._id} decks={user.decks} />
+        )}
       </Container>
     </React.Fragment>
   )
 }
 
-export default App;
+export default App
