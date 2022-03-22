@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken'
 import { User } from '../models/User.js'
 import { validator } from '../middlewares/validation.js'
 
+
 const authRouter = Router()
 
 const register = async (req, res) => {
@@ -14,15 +15,22 @@ const register = async (req, res) => {
       res.status(400).send('That email is already registered')
     } else {
       const newUser = req.body
-      // We create an encrypted string that represents the password but
-      // is not the same as the password. This may only be decoded
-      // here with these tools
       newUser.password = await bcrypt.hash(req.body.password, 10)
       const savedUser = await User.create(newUser)
-      const payload = {
-        user: savedUser._id
+      try {
+        savedUser.decks.push({
+          name: "Default Deck",
+          cards: []
+        })
+        await savedUser.save()
+      } catch (err) {
+        console.log(`${err}`)
       }
-      const token = await jwt.sign(payload. process.env.JWT_SECRET, { expiresIn: 86400 })
+      const payload = {
+        user: savedUser._id,
+        role: savedUser.role
+      }
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 })
       res.status(200).send({
         expiresIn: 86400,
         token: token
@@ -51,7 +59,7 @@ async function login(req, res) {
           user: existingUser._id,
           role: existingUser.role
         }
-        const token = await jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 })
+        const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: 86400 })
         res.status(200).send({
           expiresIn: 86400,
           token: token

@@ -15,17 +15,10 @@ const Login = () => {
   const navigate = useNavigate()
   let location = useLocation()
   let [err, setErr] = useState(null)
-
-  // Assignment: redirect the newly logged in user to the page they were on
-  // OR to the User component
-
   const source = location.state?.from?.pathname || "/user"
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    // we've used state to handle form data on submit, but if we don't really
-    // care about validation or more complex persistence, we can rely on
-    // the event data itself and an object in React called FormData
     const data = new FormData(event.currentTarget)
     login(data.get("email"), data.get("password"), (err) => {
       if (err) {

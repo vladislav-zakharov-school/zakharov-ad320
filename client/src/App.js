@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     if (auth) {
-      console.log(`[App] useEffect ${auth.token}`) // Don't do this in the real world, obviously
+      console.log(`[App] useEffect ${auth.token}`)
       axios
         .get(`http://localhost:8000/users/${auth.user}`, {
           headers: { authorization: `Bearer ${auth.token}` },

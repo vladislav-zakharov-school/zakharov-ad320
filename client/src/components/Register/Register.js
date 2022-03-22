@@ -14,14 +14,9 @@ const Register = () => {
   const { register } = useAuth()
   const navigate = useNavigate()
   let [err, setErr] = useState(null)
-  // Assignment: use the useAuth hook here to handle registering a new user
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    })
     register(data.get("firstName"), data.get("lastName"), data.get("email"), data.get("password"), (err) => {
       if (err) {
         setErr(err)
